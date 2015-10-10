@@ -22,4 +22,5 @@ so read the script), and examine the logs to see which site perform font
 fingerprinting. We need a lot more work in this script, but this is a way to
 get started.
 
-
+Documentation on the proxy library:
+https://mitmproxy.org/doc/scripting/inlinescripts.html
