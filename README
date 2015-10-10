@@ -1,1 +1,14 @@
-Hello
+Upgrade to Python 2.7.10
+
+Installing pip
+
+Installing pyOpenSSL (and if you see InsecurePlatformWarning, try again)
+
+Installing mitmproxy
+
+Test installation by running:
+pydoc libmproxy.protocol.http.HTTPRequest
+If you can view the document for HTTPRequest object then you have installed
+everything successfully.
+
+
