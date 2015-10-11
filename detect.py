@@ -71,11 +71,11 @@ def font_spoof(content):
 	#get the most common character (the delimiter)
 	for key in delimiter_list.most_common(1):
 		print "delimiter is %s\n" % (str(key[0]))
-		delimiter = str(key[0]])
+		delimiter = str(key[0])
 		pass
 	pass
 
-
+	#do something with delimiter
 
 	#random.seed()
 	#random.randint(0, len(fontList))
