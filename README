@@ -24,3 +24,11 @@ get started.
 
 Documentation on the proxy library:
 https://mitmproxy.org/doc/scripting/inlinescripts.html
+
+Install mitm certificate on browser to intercept HTTPS traffic:
+mitmproxy generates its own self-signed cert the first time it run in ~/.mitm/*
+
+For Firefox on OS X, go to browser Preferences > Advanced > Network > Certificates and import mitmproxy-ca-cert.pem in the above folder
+in order to capture HTTP traffic.
+
+For more info see https://mitmproxy.org/doc/certinstall.html
