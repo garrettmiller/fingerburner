@@ -33,3 +33,18 @@ and import mitmproxy-ca-cert.pem in the above folder in order to capture HTTP
 traffic.
 
 For more info see https://mitmproxy.org/doc/certinstall.html
+
+=======================================================
+Running web crawler
+
+First install scrapy with pip
+sudo pip install scrapy
+
+Then in fingerburner/webcrawler, run
+
+scrapy crawl webcrawler -a pattern=url_pattern.txt
+
+Give it some time, and run Ctrl-C only once
+
+The crawler will nicely clean up and leave a data.csv file in the working directory.
+That file will contain a list of URLs of distinct domain.
