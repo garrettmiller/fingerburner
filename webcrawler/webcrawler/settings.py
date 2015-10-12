@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from scrapy.settings.default_settings import LOG_LEVEL
 
 # Scrapy settings for webcrawler project
 #
@@ -13,6 +14,8 @@ BOT_NAME = 'webcrawler'
 
 SPIDER_MODULES = ['webcrawler.spiders']
 NEWSPIDER_MODULE = 'webcrawler.spiders'
+
+LOG_LEVEL = "INFO"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -61,9 +64,9 @@ NEWSPIDER_MODULE = 'webcrawler.spiders'
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'webcrawler.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'webcrawler.pipelines.WebcrawlerPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

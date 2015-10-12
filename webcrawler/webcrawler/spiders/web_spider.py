@@ -1,7 +1,7 @@
 import scrapy
 from webcrawler.items import WebcrawlerItem
 from scrapy.http import Request
-from scrapy.selector.lxmlsel import HtmlXPathSelector
+from scrapy.selector import Selector
 import re
 
 class WebSpider (scrapy.Spider):
@@ -17,9 +17,9 @@ class WebSpider (scrapy.Spider):
         pass
         
     def parse (self, response):
-        hxs = HtmlXPathSelector(response)
+        hxs = Selector(response)
         links = hxs.select("//a/@href").extract()
-                
+        
         for link in links:
             # If it is a proper link and is not checked yet, yield 
             # it to the Spider
@@ -29,12 +29,10 @@ class WebSpider (scrapy.Spider):
                 pass
             pass
         
-        titles = hxs.select('//h1[@class="post_title"]/a/text()').extract()
-        for title in titles:
-            item = WebCrawlerItem()
-            item["title"] = title
-            yield item
-            pass
+        item = WebcrawlerItem()
+        item["content"] = response.body
+        yield item
+        
         pass
 
     pass
