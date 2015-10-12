@@ -16,6 +16,6 @@ class WebcrawlerPipeline(object):
         pass
     
     def process_item(self, item, spider):
-        self.file.write(item["content"])
+        self.file.write(item["url"])
         return item
     pass
