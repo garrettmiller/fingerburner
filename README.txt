@@ -12,18 +12,19 @@ Under OS X (using Homebrew):
 ----------------------------
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install python
-pip install pyOpenSSL mitmproxy
+pip install pyOpenSSL mitmproxy pyasn1
 -----------------------------
 
 Under Ubuntu 14.04 or newer:
 ----------------------------
 sudo apt-get install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev
-sudo pip install pyOpenSSL mitmproxy
+sudo pip install pyOpenSSL mitmproxy pyasn1
 -----------------------------
+
 Test installation by running:
 pydoc libmproxy.protocol.http.HTTPRequest
 
-If you can view the document for HTTPRequest object then you have installed
+If you can view the document for the HTTPRequest class then you have installed
 everything successfully.
 
 =========================================================
