@@ -1,3 +1,11 @@
+#!/usr/bin/python
+####################################################################
+#detect.py                                                         #
+#Detection Script for Plugin-Based Fingerprinting, 2015            #
+#Houston Hunt, Alejandro Jove, Garrett Miller, Haley Nguyen        #
+#Other code/APIs borrowed are property of their respective authors.#
+####################################################################
+
 import re
 from datetime import datetime
 from collections import Counter
