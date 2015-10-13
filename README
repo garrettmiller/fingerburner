@@ -7,24 +7,23 @@
 =========================================================
 INSTALLING:
 =========================================================
-
-Install Python 2.7.10
+Install Python 2.7.X, if your system doesn't include it.
 
 Install pip for your OS:
 http://pip.readthedocs.org/en/stable/installing/
 
-Installing pyOpenSSL, mitmproxy (and if you see InsecurePlatformWarning, try again)
+Install pyOpenSSL, mitmproxy (and if you see InsecurePlatformWarning, try again)
 sudo pip install pyOpenSSL mitmproxy
 
 Test installation by running:
 pydoc libmproxy.protocol.http.HTTPRequest
+
 If you can view the document for HTTPRequest object then you have installed
 everything successfully.
 
 =========================================================
 RUNNING:
 =========================================================
-
 Run the proxy on your local computer with the detect.py (from repo)
 mitmproxy -s detect.py
 
@@ -48,7 +47,7 @@ For more info see https://mitmproxy.org/doc/certinstall.html
 =========================================================
 RUNNING WEB CRAWLER:
 =========================================================
-First install scrapy with pip
+First, install scrapy with pip:
 sudo pip install scrapy
 
 Then in fingerburner/webcrawler, run
@@ -58,4 +57,4 @@ scrapy crawl webcrawler -a pattern=url_pattern.txt
 Give it some time, and run Ctrl-C only once
 
 The crawler will nicely clean up and leave a data.csv file in the working directory.
-That file will contain a list of URLs of distinct domain.
+That file will contain a list of URLs of distinct domains.
