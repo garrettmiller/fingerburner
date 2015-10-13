@@ -15,14 +15,15 @@ brew install python
 pip install pyasn1 pyOpenSSL mitmproxy
 -----------------------------
 
-Under Ubuntu 15.04 or newer:
+Under Ubuntu 14.04 or newer:
 ----------------------------
 sudo apt-get install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev
 sudo pip install pyasn1 pyOpenSSL mitmproxy
+sudo pip install pyOpenSSL --upgrade
 -----------------------------
 
 Test installation by running:
-pydoc libmproxy.protocol.http.HTTPRequest
+	pydoc libmproxy.protocol.http.HTTPRequest
 
 If you can view the document for the HTTPRequest class then you have installed
 everything successfully.
@@ -31,16 +32,13 @@ everything successfully.
 RUNNING:
 =========================================================
 Run the proxy on your local computer with the detect.py (from repo)
-mitmproxy -s detect.py
+	mitmproxy -s detect.py
 
 Configure your browser to use HTTP proxy "localhost" on port 8080.
+	Check the box to use this proxy for all protocols.
 
-Install mitm certificate on browser to intercept HTTPS traffic:
-mitmproxy generates its own self-signed cert the first time it runs in ~/.mitm/*
-
-In Firefox, go to browser Preferences > Advanced > Network > Certificates 
-and import mitmproxy-ca-cert.pem in the above folder in order to capture HTTPS 
-traffic.
+Navigate to http://mitm.it, and install the SSL certificate by following 
+the on-screen instructions for your operating system to enable SSL protection.
 
 For more info see https://mitmproxy.org/doc/certinstall.html
 
