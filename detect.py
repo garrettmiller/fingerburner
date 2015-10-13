@@ -24,10 +24,10 @@ regExp = [re.compile(f) for f in fontList]
 #for speed, remove @concurrent if this is causing problems.
 @concurrent
 def request(context, flow):
-	with decoded(flow.request):  # automatically decode gzipped responses.
+	with decoded(flow.request):  #automatically decode gzipped responses.
 		
-		#Only run for POST data responses, return otherwise
-		if(flow.request.method != "POST"):
+		#Only run for POST or GET data responses, return otherwise
+		if(flow.request.method != "POST" and flow.request.method != "GET"):
 			return
 
 		#Always make useragent more common, to reduce fingerprintability.
@@ -70,7 +70,6 @@ def request(context, flow):
 
 #Function to do font list spoofing as part of a Flash or Java plugin response
 def font_spoof(content):
-
 	#Initialize empty list of possible delimiters
 	delimiter_list = []
 
@@ -102,13 +101,13 @@ def font_spoof(content):
 def useragent_spoof(headers):
 	#Check browser type, then assign to a common version. Placeholders for now.
 	if "Chrome" in str(headers['User-Agent']):
-		headers['User-Agent'] = "CommonChrome"
+		headers['User-Agent'] = ['CommonChrome']
 	elif "Firefox" in str(headers['User-Agent']):
-		headers['User-Agent'] = "CommonFirefox"
+		headers['User-Agent'] = ['CommonFirefox']
 	elif "Safari" in str(headers['User-Agent']):
-		headers['User-Agent'] = "CommonSafari"
+		headers['User-Agent'] = ['CommonSafari']
 	elif "MSIE" in str(headers['User-Agent']):
-		headers['User-Agent'] = "CommonIE"
+		headers['User-Agent'] = ['CommonIE']
 	
 
 

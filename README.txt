@@ -15,7 +15,7 @@ brew install python
 pip install pyOpenSSL mitmproxy pyasn1
 -----------------------------
 
-Under Ubuntu 14.04 or newer:
+Under Ubuntu 15.04 or newer:
 ----------------------------
 sudo apt-get install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev
 sudo pip install pyOpenSSL mitmproxy pyasn1
