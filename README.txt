@@ -7,14 +7,19 @@
 =========================================================
 INSTALLING:
 =========================================================
-Install Python 2.7.9 or greater 2.7.X, if your system doesn't include it already.
 
-Install pip for your OS:
-http://pip.readthedocs.org/en/stable/installing/
+Under OS X (using Homebrew):
+----------------------------
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew install python
+pip install pyOpenSSL mitmproxy
+-----------------------------
 
-Install pyOpenSSL, mitmproxy (and if you see InsecurePlatformWarning, try again)
+Under Ubuntu 14.04 or newer:
+----------------------------
+sudo apt-get install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev
 sudo pip install pyOpenSSL mitmproxy
-
+-----------------------------
 Test installation by running:
 pydoc libmproxy.protocol.http.HTTPRequest
 
