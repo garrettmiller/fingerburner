@@ -20,8 +20,8 @@ fontList = ["Times New Roman", "Copperplate", "Arial", "Calibri", "Sans", "Papyr
 
 regExp = [re.compile(f) for f in fontList]
 
-#Handle packet requests for mitmproxy. Runs concurrently
-#for speed, remove @concurrent if this is causing problems.
+#Handle packet requests for mitmproxy. Runs concurrently for speed, 
+#remove @concurrent if this is causing problems.
 @concurrent
 def request(context, flow):
 	with decoded(flow.request):  #automatically decode gzipped responses.
@@ -93,21 +93,17 @@ def font_spoof(content):
 	#random.randint(0, len(fontList))
 
 #Function to do useragent spoofing
-#TODO - We'll likely want to find a list of most common ones, set ourselves to that
-#or just minimize the amount of minor version numbers we're sending. 
+#Sourced from https://techblog.willshouse.com/2012/01/03/most-common-user-agents/ on 8/14/2015.
+#Too few people use Linux, it makes you unique.  Thus, omitting and defaulting to OS X.
 def useragent_spoof(headers):
 	#Check browser type, then assign to a common version. Placeholders for now.
 	if "Chrome" in str(headers['User-Agent']):
-		if "OS X" in str(headers['User-Agent']):
-			headers['User-Agent'] = ['ChromeOSX']
-		elif "Linux" in str(headers['User-Agent']):
-			headers['User-Agent'] = ['ChromeLinux']
+		#OS X 10.10.5 and Chrome 45
+		headers['User-Agent'] = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36']
 	elif "Firefox" in str(headers['User-Agent']):
-		if "OS X" in str(headers['User-Agent']):
-			headers['User-Agent'] = ['FirefoxOSX']
-		elif "Linux" in str(headers['User-Agent']):
-			headers['User-Agent'] = ['FirefoxLinux']
-	elif "Safari" in str(headers['User-Agent']):
-		if "OS X" in str(headers['User-Agent']):
-			headers['User-Agent'] = ['SafariOSX']
+		#OS X 10.10 and Firefox 40.0
+		headers['User-Agent'] = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:40.0) Gecko/20100101 Firefox/40.0']
+	else:
+		#OS X 10.10.5 and Safari 8.0
+		headers['User-Agent'] = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9']
 	
