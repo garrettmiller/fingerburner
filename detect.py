@@ -40,9 +40,6 @@ def request(context, flow):
 		f1.write("%s\n" % (flow.request.method))
 		f1.close()
 
-		#DEBUG statement to see flow request
-		#print(flow.request)
-
 		#Initialize num_match for iterating through font list
 		num_match = 0
 
@@ -101,15 +98,16 @@ def font_spoof(content):
 def useragent_spoof(headers):
 	#Check browser type, then assign to a common version. Placeholders for now.
 	if "Chrome" in str(headers['User-Agent']):
-		headers['User-Agent'] = ['CommonChrome']
+		if "OS X" in str(headers['User-Agent']):
+			headers['User-Agent'] = ['ChromeOSX']
+		elif "Linux" in str(headers['User-Agent']):
+			headers['User-Agent'] = ['ChromeLinux']
 	elif "Firefox" in str(headers['User-Agent']):
-		headers['User-Agent'] = ['CommonFirefox']
+		if "OS X" in str(headers['User-Agent']):
+			headers['User-Agent'] = ['FirefoxOSX']
+		elif "Linux" in str(headers['User-Agent']):
+			headers['User-Agent'] = ['FirefoxLinux']
 	elif "Safari" in str(headers['User-Agent']):
-		headers['User-Agent'] = ['CommonSafari']
-	elif "MSIE" in str(headers['User-Agent']):
-		headers['User-Agent'] = ['CommonIE']
+		if "OS X" in str(headers['User-Agent']):
+			headers['User-Agent'] = ['SafariOSX']
 	
-
-
-
-
