@@ -46,8 +46,6 @@ def request(context, flow):
 		for i in range(len(regExp)):
 			if regExp[i].search(flow.request.content):
 				num_match += 1
-				pass
-			pass
 
 		#If we see a lot of words matching fonts in response, 
 		#font fingerprinting is likely happening.
@@ -61,8 +59,6 @@ def request(context, flow):
 			f2.write("FONTS FOUND: %d\n" % (num_match))
 			f2.close()
 			spoofed_content = font_spoof(flow.request.content)
-			pass
-		pass
 
 #Function to do font list spoofing as part of a Flash or Java plugin response
 def font_spoof(content):
@@ -74,8 +70,6 @@ def font_spoof(content):
 		if regExp[i].search(content):
 			last_index = content.rfind(x.search(content).group(0))
 			delimiter_list.append(content[last_index + len(x.search(content).group(0))])
-			pass
-		pass
 
 	delimiter_list = Counter(delimiter_list)
 
@@ -83,8 +77,6 @@ def font_spoof(content):
 	for key in delimiter_list.most_common(1):
 		print "delimiter is %s\n" % (str(key[0]))
 		delimiter = str(key[0])
-		pass
-	pass
 
 	#Do something with delimiter
 
