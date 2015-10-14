@@ -7,7 +7,6 @@
 =========================================================
 INSTALLING:
 =========================================================
-
 Under OS X (using Homebrew):
 ----------------------------
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -31,8 +30,8 @@ everything successfully.
 =========================================================
 RUNNING:
 =========================================================
-Run the proxy on your local computer with the detect.py (from repo)
-	mitmproxy -s detect.py
+Run the proxy on your local computer:
+	./main.sh
 
 Configure your browser to use HTTP proxy "localhost" on port 8080.
 	Check the box to use this proxy for all protocols.
@@ -46,11 +45,10 @@ For more info see https://mitmproxy.org/doc/certinstall.html
 RUNNING WEB CRAWLER:
 =========================================================
 First, install scrapy with pip:
-sudo pip install scrapy
+	sudo pip install scrapy
 
-Then in fingerburner/webcrawler, run
-
-scrapy crawl webcrawler -a pattern=url_pattern.txt
+Then in the fingerburner/webcrawler directory, run:
+	scrapy crawl webcrawler -a pattern=url_pattern.txt
 
 Give it some time, and run Ctrl-C only once
 
@@ -60,7 +58,6 @@ That file will contain a list of URLs of distinct domains.
 =========================================================
 ACKNOWLEDGEMENTS:
 =========================================================
-
 The mitmproxy Project:
 https://mitmproxy.org/
 

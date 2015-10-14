@@ -4,7 +4,6 @@
 #Detection Script for Plugin-Based Fingerprinting, 2015            #
 #Houston Hunt, Alejandro Jove, Garrett Miller, Haley Nguyen        #
 #Other code/APIs borrowed are property of their respective authors.#
-#USAGE: mitmproxy -s detect.py --anticache                         #
 ####################################################################
 
 import re
@@ -94,9 +93,9 @@ def font_spoof(content):
 
 #Function to do useragent spoofing
 #Sourced from https://techblog.willshouse.com/2012/01/03/most-common-user-agents/ on 8/14/2015.
-#Too few people use Linux, it makes you unique.  Thus, omitting and defaulting to OS X.
+#Too few people use Linux, it makes you unique. Thus, omitting and defaulting to OS X.
 def useragent_spoof(headers):
-	#Check browser type, then assign to a common version. Placeholders for now.
+	#Check browser type, then assign to a common version.
 	if "Chrome" in str(headers['User-Agent']):
 		#OS X 10.10.5 and Chrome 45
 		headers['User-Agent'] = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36']
