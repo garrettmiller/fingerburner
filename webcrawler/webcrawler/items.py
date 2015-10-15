@@ -7,9 +7,11 @@
 
 import scrapy
 
+def serialize_url (url):
+    return url
 
 class WebcrawlerItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    url = scrapy.Field()
+    url = scrapy.Field(serializer=serialize_url)
     pass
