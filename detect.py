@@ -15,13 +15,13 @@ from libmproxy.protocol.http import decoded #Enable decoding gzipped responses
 #Establish a list of fonts to compare against to detect fingerprinting
 fontList = ["Times New Roman", "Copperplate", "Arial", "Calibri", "Sans", "Papyrus",
 "Perpetua", "Gotham", "Serif", "Book Antiqua", "Garamond", "Baskerville",
-"Century Schoolbook", "Gothic", "Optima"]
+"Century Schoolbook", "Gothic", "Optima", "Droid Sans", "Liberation Serif", "FreeSans"
+"OpenSymbol", "Ubuntu Mono", "Symbola", "Ubuntu Light"]
 
 regExp = [re.compile(f) for f in fontList]
 
 #Handle packet requests for mitmproxy. Runs concurrently for speed, 
 #remove @concurrent if this is causing problems.
-@concurrent
 def request(context, flow):
 	with decoded(flow.request):  #automatically decode gzipped responses.
 		

@@ -5,4 +5,4 @@
 #Houston Hunt, Alejandro Jove, Garrett Miller, Haley Nguyen        #
 #Other code/APIs borrowed are property of their respective authors.#
 ####################################################################
-mitmproxy -s detect.py
+mitmdump -s detect.py
