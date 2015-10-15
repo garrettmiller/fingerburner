@@ -12,10 +12,7 @@ from libmproxy.script import concurrent #Enable concurrency to increase speed
 from libmproxy.protocol.http import decoded #Enable decoding gzipped responses
 
 #Establish a list of fonts to compare against to detect fingerprinting
-fontList = ["Times New Roman", "Copperplate", "Arial", "Calibri", "Sans", "Papyrus",
-"Perpetua", "Gotham", "Serif", "Book Antiqua", "Garamond", "Baskerville",
-"Century Schoolbook", "Gothic", "Optima", "Droid Sans", "Liberation Serif", "FreeSans"
-"OpenSymbol", "Ubuntu Mono", "Symbola", "Ubuntu Light", "FreeMono", "Droid Serif"]
+fontList = ['Agency FB', 'Algerian', 'Arial', 'Arial Black', 'Arial Narrow', 'Arial Rounded MT Bold', 'Arial Unicode MS', 'Baskerville Old Face', 'Bauhaus 93', 'Bell MT', 'Berlin Sans FB', 'Berlin Sans FB Demi', 'Bernard MT Condensed', 'Blackadder ITC', 'Bodoni MT', 'Bodoni MT Black', 'Bodoni MT Condensed', 'Bodoni MT Poster Compressed', 'Book Antiqua', 'Bookman Old Style', 'Bookshelf Symbol 7', 'Bradley Hand ITC', 'Britannic Bold', 'Broadway', 'Brush Script MT', 'Caladea', 'Calibri', 'Calibri Light', 'Californian FB', 'Calisto MT', 'Cambria', 'Cambria Math', 'Candara', 'Carlito', 'Castellar', 'Centaur', 'Century', 'Century Gothic', 'Century Schoolbook', 'Chiller', 'Colonna MT', 'Comic Sans MS', 'Consolas', 'Constantia', 'Cooper Black', 'Copperplate Gothic Bold', 'Copperplate Gothic Light', 'Corbel', 'Courier', 'Courier New', 'Curlz MT', 'DejaVu Sans', 'DejaVu Sans Condensed', 'DejaVu Sans Light', 'DejaVu Sans Mono', 'DejaVu Serif', 'DejaVu Serif Condensed', 'Ebrima', 'Edwardian Script ITC', 'Elephant', 'Engravers MT', 'Eras Bold ITC', 'Eras Demi ITC', 'Eras Light ITC', 'Eras Medium ITC', 'Felix Titling', 'Fixedsys', 'Footlight MT Light', 'Forte', 'Franklin Gothic Book', 'Franklin Gothic Demi', 'Franklin Gothic Demi Cond', 'Franklin Gothic Heavy', 'Franklin Gothic Medium', 'Franklin Gothic Medium Cond', 'Freestyle Script', 'French Script MT', 'Gabriola', 'Gadugi', 'Garamond', 'Gentium Basic', 'Gentium Book Basic', 'Georgia', 'Gigi', 'Gill Sans MT', 'Gill Sans MT Condensed', 'Gill Sans MT Ext Condensed Bold', 'Gill Sans Ultra Bold', 'Gill Sans Ultra Bold Condensed', 'Gloucester MT Extra Condensed', 'Goudy Old Style', 'Goudy Stout', 'Haettenschweiler', 'Harlow Solid Italic', 'Harrington', 'High Tower Text', 'Impact', 'Imprint MT Shadow', 'Informal Roman', 'Javanese Text', 'Jokerman', 'Juice ITC', 'Kristen ITC', 'Kunstler Script', 'Leelawadee UI', 'Leelawadee UI Semilight', 'Liberation Mono', 'Liberation Sans', 'Liberation Sans Narrow', 'Liberation Serif', 'Linux Biolinum G', 'Linux Libertine Display G', 'Linux Libertine G', 'Lucida Bright', 'Lucida Calligraphy', 'Lucida Console', 'Lucida Fax', 'Lucida Handwriting', 'Lucida Sans', 'Lucida Sans Typewriter', 'Lucida Sans Unicode', 'Magneto', 'Maiandra GD', 'Malgun Gothic', 'Malgun Gothic Semilight', 'Marlett', 'Matura MT Script Capitals', 'Microsoft Himalaya', 'Microsoft JhengHei', 'Microsoft JhengHei Light', 'Microsoft JhengHei UI', 'Microsoft JhengHei UI Light', 'Microsoft New Tai Lue', 'Microsoft PhagsPa', 'Microsoft Sans Serif', 'Microsoft Tai Le', 'Microsoft YaHei', 'Microsoft YaHei Light', 'Microsoft YaHei UI', 'Microsoft YaHei UI Light', 'Microsoft Yi Baiti', 'MingLiU-ExtB', 'MingLiU_HKSCS-ExtB', 'Mistral', 'Modern', 'Modern No. 20', 'Mongolian Baiti', 'Monotype Corsiva', 'MS Reference Sans Serif', 'MS Reference Specialty', 'MS Sans Serif', 'MS Serif', 'MT Extra', 'MV Boli', 'Myanmar Text', 'Niagara Engraved', 'Niagara Solid', 'Nirmala UI', 'Nirmala UI Semilight', 'NSimSun', 'OCR A Extended', 'Old English Text MT', 'Onyx', 'Open Sans', 'OpenSymbol', 'Palace Script MT', 'Palatino Linotype', 'Papyrus', 'Parchment', 'Perpetua', 'Perpetua Titling MT', 'Playbill', 'PMingLiU-ExtB', 'Poor Richard', 'Pristina', 'PT Serif', 'Rage Italic', 'Ravie', 'Rockwell', 'Rockwell Condensed', 'Rockwell Extra Bold', 'Roman', 'Script', 'Script MT Bold', 'Segoe MDL2 Assets', 'Segoe Print', 'Segoe Script', 'Segoe UI', 'Segoe UI Black', 'Segoe UI Emoji', 'Segoe UI Historic', 'Segoe UI Light', 'Segoe UI Semibold', 'Segoe UI Semilight', 'Segoe UI Symbol', 'Showcard Gothic', 'SimSun', 'SimSun-ExtB', 'Sitka Banner', 'Sitka Display', 'Sitka Heading', 'Sitka Small', 'Sitka Subheading', 'Sitka Text', 'Small Fonts', 'Snap ITC', 'Source Code Pro', 'Source Sans Pro', 'Source Sans Pro Black', 'Source Sans Pro ExtraLight', 'Source Sans Pro Light', 'Source Sans Pro Semibold', 'Stencil', 'Sylfaen', 'Symbol', 'System', 'Tahoma', 'TeamViewer10', 'Tempus Sans ITC', 'Terminal', 'Times New Roman', 'Trebuchet MS', 'Tw Cen MT', 'Tw Cen MT Condensed', 'Tw Cen MT Condensed Extra Bold', 'Verdana', 'Viner Hand ITC', 'Vivaldi', 'Vladimir Script', 'Webdings', 'Wide Latin', 'Wingdings', 'Wingdings 2', 'Wingdings 3', 'Yu Gothic', 'Yu Gothic Light', 'Yu Gothic Medium', 'Yu Gothic UI', 'Yu Gothic UI Light', 'Yu Gothic UI Semibold', 'Yu Gothic UI Semilight', 'Yu Mincho', 'Yu Mincho Demibold', 'Yu Mincho Light', 'KacstFarsi', 'Droid Sans Armenian', 'Meera', 'FreeMono', 'Padauk Book', 'Loma', 'Droid Sans', 'Century Schoolbook L', 'KacstTitleL', 'Ubuntu Medium', 'Droid Arabic Naskh', 'OpenDyslexic', 'Garuda', 'Rekha', 'Purisa', 'DejaVu Sans Mono', 'Droid Sans Mono', 'Vemana2000', 'KacstOffice', 'Umpush', 'OpenSymbol', 'Sawasdee', 'Droid Sans Ethiopic', 'Tibetan Machine Uni', 'URW Palladio L', 'FreeSerif', 'KacstDigital', 'Ubuntu Condensed', 'Droid Arabic Kufi', 'mry_KacstQurn', 'Padauk', 'URW Gothic L', 'Droid Sans Georgian', 'Dingbats', 'URW Chancery L', 'Phetsarath OT', 'Droid Sans Japanese', 'Tlwg Typist', 'KacstLetter', 'utkal', 'Norasi', 'Droid Sans Fallback', 'OpenDyslexicMono', 'KacstOne', 'Liberation Sans Narrow', 'NanumMyeongjo', 'Lohit Gujarati', 'Liberation Mono', 'KacstArt', 'Mallige', 'Bitstream Charter', 'NanumGothic', 'Liberation Serif', 'Ubuntu', 'Courier 10 Pitch', 'Nimbus Sans L', 'Droid Sans Hebrew', 'TakaoPGothic', 'DejaVu Sans', 'Kedage', 'NanumBarunGothic', 'Kinnari', 'TlwgMono', 'Standard Symbols L', 'Lohit Punjabi', 'Nimbus Mono L', 'Rachana', 'Waree', 'KacstPoster', 'Khmer OS', 'FreeSans', 'gargi', 'Droid Sans Arabic', 'Nimbus Roman No9 L', 'DejaVu Serif', 'Ubuntu Light', 'TlwgTypewriter', 'KacstPen', 'Laksaman', 'Lohit Devanagari', 'Tlwg Typo', 'Droid Serif', 'Mukti Narrow', 'Droid Naskh Shift Alt', 'Ubuntu Mono', 'Lohit Bengali', 'Liberation Sans', 'KacstDecorative', 'Khmer OS System', 'Saab', 'Mukti Narrow', 'Symbola', 'KacstTitle', 'LKLUG', 'Abyssinica SIL', 'OpenDyslexicAlta', 'KacstQurn', 'URW Bookman L', 'KacstNaskh', 'KacstScreen', 'Pothana2000', 'Lohit Tamil', 'KacstBook']
 
 #Handle packet requests for mitmproxy. Runs concurrently for speed, 
 #remove @concurrent if this is causing problems.
@@ -43,7 +40,6 @@ def request(context, flow):
 		#Iterate through font list to see if our font was found therein.
 		for f in fontList:
 			if f in str(flow.request.content):
-				print "FONTFOUND"
 				num_match += 1
 
 		#If we see a lot of words matching fonts in response, 
@@ -63,15 +59,15 @@ def request(context, flow):
 def font_spoof(content):
 	#Initialize empty list of possible delimiters
 	delimiter_list = []
-
+	
+	#Alejandro - let's talk about this, we can rework based on new method of list iterating. - Garrett
 	#Build a list of characters found after a font to find delimiter
-	for f in fontList:
-		if f in str(content):
-			#Alejandro - let's talk about this, we can rework 
-			#based on new method of list iterating.
+	#for f in fontList:
+		#if f in str(content):
+
 			#last_index = content.rfind(x.search(content).group(0))
 			#delimiter_list.append(content[last_index + len(x.search(content).group(0))])
-
+		
 	delimiter_list = Counter(delimiter_list)
 
 	#Get the most common character (the delimiter)
