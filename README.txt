@@ -57,7 +57,12 @@ Then in the fingerburner/webcrawler directory, run:
 Give it some time, and run Ctrl-C only once
 
 The crawler will nicely clean up and leave a webcrawler_urls.txt file in the 
-working directory. This file will contain a list of URLs of distinct domains.
+working directory. This file will contain a list of URLs of distinct sub-domains.
+For example:
+http://loveemerald.deviantart.com
+AND
+http://le-vampire-cat.deviantart.com
+ARE CONSIDERED DISTINCT.
 
 =========================================================
 ACKNOWLEDGEMENTS:
