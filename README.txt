@@ -47,13 +47,17 @@ RUNNING WEB CRAWLER:
 First, install scrapy with pip:
 	sudo pip install scrapy
 
+Set ulimit -n 1024, and ulimit -u 1024.
+How to set this is dependent on your system, but on Mac OSX 10.9, I put these commands
+.bash_profile.
+
 Then in the fingerburner/webcrawler directory, run:
 	scrapy crawl webcrawler -a pattern=url_pattern.txt
 
 Give it some time, and run Ctrl-C only once
 
-The crawler will nicely clean up and leave a data.csv file in the working directory.
-That file will contain a list of URLs of distinct domains.
+The crawler will nicely clean up and leave a webcrawler_urls.txt file in the 
+working directory. This file will contain a list of URLs of distinct domains.
 
 =========================================================
 ACKNOWLEDGEMENTS:
