@@ -6,7 +6,6 @@
 #Other code/APIs borrowed are property of their respective authors.#
 ####################################################################
 
-import re
 from datetime import datetime #Necessary for logging time
 from collections import Counter
 from libmproxy.script import concurrent #Enable concurrency to increase speed
@@ -16,12 +15,11 @@ from libmproxy.protocol.http import decoded #Enable decoding gzipped responses
 fontList = ["Times New Roman", "Copperplate", "Arial", "Calibri", "Sans", "Papyrus",
 "Perpetua", "Gotham", "Serif", "Book Antiqua", "Garamond", "Baskerville",
 "Century Schoolbook", "Gothic", "Optima", "Droid Sans", "Liberation Serif", "FreeSans"
-"OpenSymbol", "Ubuntu Mono", "Symbola", "Ubuntu Light"]
-
-regExp = [re.compile(f) for f in fontList]
+"OpenSymbol", "Ubuntu Mono", "Symbola", "Ubuntu Light", "FreeMono", "Droid Serif"]
 
 #Handle packet requests for mitmproxy. Runs concurrently for speed, 
 #remove @concurrent if this is causing problems.
+@concurrent
 def request(context, flow):
 	with decoded(flow.request):  #automatically decode gzipped responses.
 		
@@ -43,8 +41,9 @@ def request(context, flow):
 		num_match = 0
 
 		#Iterate through font list to see if our font was found therein.
-		for i in range(len(regExp)):
-			if regExp[i].search(flow.request.content):
+		for f in fontList:
+			if f in str(flow.request.content):
+				print "FONTFOUND"
 				num_match += 1
 
 		#If we see a lot of words matching fonts in response, 
@@ -66,10 +65,12 @@ def font_spoof(content):
 	delimiter_list = []
 
 	#Build a list of characters found after a font to find delimiter
-	for i in range(len(regExp)):
-		if regExp[i].search(content):
-			last_index = content.rfind(x.search(content).group(0))
-			delimiter_list.append(content[last_index + len(x.search(content).group(0))])
+	for f in fontList:
+		if f in str(content):
+			#Alejandro - let's talk about this, we can rework 
+			#based on new method of list iterating.
+			#last_index = content.rfind(x.search(content).group(0))
+			#delimiter_list.append(content[last_index + len(x.search(content).group(0))])
 
 	delimiter_list = Counter(delimiter_list)
 
