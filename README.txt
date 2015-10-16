@@ -65,6 +65,16 @@ http://le-vampire-cat.deviantart.com
 ARE CONSIDERED DISTINCT.
 
 =========================================================
+LIMITATIONS:
+=========================================================
+Currently, FingerBurner does not support Microsoft Windows.  Adding support for 
+Windows is certainly possible, but was not an initial development target.
+
+FingerBurner does not guarantee you will be 100% un-fingerprintable on the web. It
+merely attempts to conceal and obfuscate your browser's fingerprint - and help you
+"blend into the noise".
+
+=========================================================
 ACKNOWLEDGEMENTS:
 =========================================================
 The mitmproxy Project:

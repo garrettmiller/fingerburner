@@ -10,7 +10,7 @@ from datetime import datetime #Necessary for logging time
 from collections import Counter
 from libmproxy.script import concurrent #Enable concurrency to increase speed
 from libmproxy.protocol.http import decoded #Enable decoding gzipped responses
-import pickle #Read our fontlist in from file
+import pickle #Necessary to read our fontlist in from file
 
 #Load fontList
 fontList = pickle.load(open("fontlist.pickle", "rb"))
