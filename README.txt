@@ -7,7 +7,7 @@
 =========================================================
 INSTALLING:
 =========================================================
-Under OS X (using Homebrew):
+Under OS X 10.9 or newer (using Homebrew):
 ----------------------------
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install python
@@ -38,8 +38,7 @@ everything successfully.
 RUNNING:
 =========================================================
 Run the proxy on your local computer (from the FingerBurner directory):
-	OSX, Linux: ./main.sh
-	
+	OS X, Linux: ./main.sh
 	Windows: main.bat
 
 Configure your browser to use HTTP proxy "localhost" on port 8080.
@@ -57,13 +56,13 @@ First, install scrapy with pip:
 	sudo pip install scrapy
 
 Set ulimit -n 1024, and ulimit -u 1024.
-How to set this is dependent on your system, but on Mac OSX 10.9, I put these commands
-.bash_profile.
+How to set this is dependent on your system, but on Mac OS X 10.9, 
+I put these commands in .bash_profile.
 
 Then in the fingerburner/webcrawler directory, run:
 	scrapy crawl webcrawler -a pattern=url_pattern.txt
 
-Give it some time, and run Ctrl-C only once
+Give it some time, and run Ctrl-C only once.
 
 The crawler will nicely clean up and leave a webcrawler_urls.txt file in the 
 working directory. This file will contain a list of URLs of distinct sub-domains.
@@ -82,4 +81,5 @@ https://mitmproxy.org/
 The pyOpenSSL Project:
 https://github.com/pyca/pyopenssl
 
-Alessandro Acquisti and the teaching staff of 94-806, Privacy in the Digital Age, at Carnegie Mellon University.
+Alessandro Acquisti and the teaching staff of 94-806, 
+Privacy in the Digital Age, at Carnegie Mellon University.
