@@ -40,7 +40,7 @@ RUNNING:
 Run the proxy on your local computer (from the FingerBurner directory):
 	OSX, Linux: ./main.sh
 	
-	Windows: C:\Python27\Scripts\mitmdump.exe -s detect.py
+	Windows: main.bat
 
 Configure your browser to use HTTP proxy "localhost" on port 8080.
 	Check the box to use this proxy for all protocols.

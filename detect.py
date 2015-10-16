@@ -11,9 +11,9 @@ from collections import Counter
 from libmproxy.script import concurrent #Enable concurrency to increase speed
 from libmproxy.protocol.http import decoded #Enable decoding gzipped responses
 try:
-	import cPickle as pickle
+	import cPickle as pickle #Necessary to read our fontlist in from file
 except:
-	import pickle #Necessary to read our fontlist in from file
+	import pickle #cPickle is faster, but fall back to pickle if it's not there.
 
 #Load fontList
 fontList = pickle.load(open("fontlist.pickle", "rb"))
