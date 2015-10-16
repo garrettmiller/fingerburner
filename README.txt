@@ -21,6 +21,13 @@ sudo pip install pyasn1 pyOpenSSL mitmproxy
 sudo pip install pyOpenSSL --upgrade
 -----------------------------
 
+Under Windows:
+-----------------------------
+Install Python 2.7.10 (includes pip) - https://www.python.org/downloads/
+Open a command prompt and run the following: 
+	C:\Python27\Scripts\pip install pyasn1 pyOpenSSL mitmproxy --upgrade
+-----------------------------
+
 Test installation by running:
 	pydoc libmproxy.protocol.http.HTTPRequest
 
@@ -30,8 +37,10 @@ everything successfully.
 =========================================================
 RUNNING:
 =========================================================
-Run the proxy on your local computer:
-	./main.sh
+Run the proxy on your local computer (from the FingerBurner directory):
+	OSX, Linux: ./main.sh
+	
+	Windows: C:\Python27\Scripts\mitmdump.exe -s detect.py
 
 Configure your browser to use HTTP proxy "localhost" on port 8080.
 	Check the box to use this proxy for all protocols.
@@ -63,16 +72,6 @@ http://loveemerald.deviantart.com
 AND
 http://le-vampire-cat.deviantart.com
 ARE CONSIDERED DISTINCT.
-
-=========================================================
-LIMITATIONS:
-=========================================================
-Currently, FingerBurner does not support Microsoft Windows.  Adding support for 
-Windows is certainly possible, but was not an initial development target.
-
-FingerBurner does not guarantee you will be 100% un-fingerprintable on the web. It
-merely attempts to conceal and obfuscate your browser's fingerprint - and help you
-"blend into the noise".
 
 =========================================================
 ACKNOWLEDGEMENTS:
