@@ -21,7 +21,7 @@ sudo pip install pyasn1 pyOpenSSL mitmproxy
 sudo pip install pyOpenSSL --upgrade
 -----------------------------
 
-Under Windows:
+Under Windows 7 or newer:
 -----------------------------
 Install Python 2.7.10 (includes pip) - https://www.python.org/downloads/
 Open a command prompt and run the following: 
