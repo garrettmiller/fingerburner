@@ -1,1 +1,1 @@
-C:\Python27\Scripts\mitmdump.exe -s detect.py
+C:\Python27\Scripts\mitmdump.exe -s FingerBurner.py
