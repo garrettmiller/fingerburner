@@ -125,8 +125,9 @@ def useragent_spoof(headers):
 
 #Function to do browser plugin list detection as part of a JS response.
 def browserplugin_detect(content):
-	pluginList = ['Shockwave Flash', 'Silverlight Plug-In', 'Chrome PDF Viewer', 
-	'Native Client', 'Widevine Content Decryption Module', 'FutureSplash Player']
+	pluginList = ['Shockwave', 'Flash', 'Silverlight', 'Plug-In', 'plugins',
+	'Chrome PDF Viewer', 'Native Client', 'NaCl', 'Widevine Content Decryption Module', 'Widevine', 'FutureSplash Player', 'VLC Web Plugin', 'Adobe Reader',
+	'Chrome Remote Desktop Viewer', 'Unity Web Player']
 	
 	#Initialize num_match for iterating through plugin list
 	num_match = 0
@@ -142,12 +143,12 @@ def browserplugin_detect(content):
 	#Write to logfile for fingerprinting.
 	if num_match >= 3:
 		print "Plugin fingerprinting detected"
-		f2 = open ("plugin_log.txt", "a")
-		f2.write("----------%s----------\n" % str(datetime.now()))
-		f2.write("URL: %s\n" % content.pretty_url(True))
-		f2.write("CONTENT: %s\n" % content.content)
-		f2.write("FONTS FOUND: %d\n" % (num_match))
-		f2.close()
+		f3 = open ("plugin_log.txt", "a")
+		f3.write("----------%s----------\n" % str(datetime.now()))
+		f3.write("URL: %s\n" % content.pretty_url(True))
+		f3.write("CONTENT: %s\n" % content.content)
+		f3.write("FONTS FOUND: %d\n" % (num_match))
+		f3.close()
 		#Do plugin spoofing, if plugin detection detected.
 		browserplugin_spoof(content.content)
 	
