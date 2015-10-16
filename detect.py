@@ -126,7 +126,8 @@ def useragent_spoof(headers):
 #Function to do browser plugin list detection as part of a JS response.
 def browserplugin_detect(content):
 	pluginList = ['Shockwave', 'Flash', 'Silverlight', 'Plug-In', 'plugins',
-	'Chrome PDF Viewer', 'Native Client', 'NaCl', 'Widevine Content Decryption Module', 'Widevine', 'FutureSplash Player', 'VLC Web Plugin', 'Adobe Reader',
+	'Chrome PDF Viewer', 'Native Client', 'NaCl', 'Widevine Content Decryption Module', 
+	'Widevine', 'FutureSplash Player', 'VLC Web Plugin', 'Adobe Reader',
 	'Chrome Remote Desktop Viewer', 'Unity Web Player']
 	
 	#Initialize num_match for iterating through plugin list
