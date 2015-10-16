@@ -27,10 +27,7 @@ def request(context, flow):
 		#Only run for POST or GET data responses, return otherwise
 		if(flow.request.method != "POST" and flow.request.method != "GET"):
 			return
-
-		#Always make useragent more common, to reduce fingerprintability.
-		spoofed_content = useragent_spoof(flow.request.headers)
-
+			
 		#Write logfile for browsing, likely will remove this for final deliverable.
 		f1 = open("log.txt", "a")
 		f1.write("%s\n" % (flow.request.pretty_url(True)))
@@ -38,26 +35,39 @@ def request(context, flow):
 		f1.write("%s\n" % (flow.request.method))
 		f1.close()
 
-		#Initialize num_match for iterating through font list
-		num_match = 0
+		#Always make useragent more common, to reduce fingerprintability.
+		useragent_spoof(flow.request.headers)
+		
+		#Do plugin detection detection, spoofing if necessary
+		browserplugin_detect()
+		
+		#Do font detection, spoofing if necessary
+		font_detect(flow.request)
 
-		#Iterate through font list to see if our font was found therein.
-		for f in fontList:
-			if f in str(flow.request.content):
-				num_match += 1
+#Function to detect font fingerprinting
+def font_detect(content):
+	#Initialize num_match for iterating through font list
+	num_match = 0
 
-		#If we see a lot of words matching fonts in response, 
-		#font fingerprinting is likely happening.
-		#Write to logfile for fingerprinting.
-		if num_match >= 5:
-			print "Font fingerprinting detected"
-			f2 = open ("fp_log.txt", "a")
-			f2.write("----------%s----------\n" % str(datetime.now()))
-			f2.write("URL: %s\n" % flow.request.pretty_url(True))
-			f2.write("CONTENT: %s\n" % flow.request.content)
-			f2.write("FONTS FOUND: %d\n" % (num_match))
-			f2.close()
-			spoofed_content = font_spoof(flow.request.content)
+	#Iterate through font list to see if our font was found therein.
+	for f in fontList:
+		if f in str(content.content):
+			num_match += 1
+
+	#If we see a lot of words matching fonts in response, 
+	#font fingerprinting is likely happening.
+	#Write to logfile for fingerprinting.
+	if num_match >= 5:
+		print "Font fingerprinting detected"
+		f2 = open ("fp_log.txt", "a")
+		f2.write("----------%s----------\n" % str(datetime.now()))
+		f2.write("URL: %s\n" % content.pretty_url(True))
+		f2.write("CONTENT: %s\n" % content.content)
+		f2.write("FONTS FOUND: %d\n" % (num_match))
+		f2.close()
+		#Do font spoofing, if font detection detected.
+		font_spoof(content.content)
+	return content
 
 #Function to do font list spoofing as part of a Flash or Java plugin response
 def font_spoof(content):
@@ -112,4 +122,11 @@ def useragent_spoof(headers):
 	else:
 		#OS X 10.10.5 and Safari 8.0
 		headers['User-Agent'] = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9']
+
+#Function to do browser plugin list detection as part of a JS response.
+def browserplugin_detect(content):
+	pass
 	
+#Function to do browser plugin list spoofing if necessary.
+def browserplugin_spoof(content):
+	pass
