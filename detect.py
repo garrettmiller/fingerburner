@@ -96,6 +96,7 @@ def useragent_spoof(headers):
 		else:
 			#OS X 10.10.5 and Chrome 45
 			headers['User-Agent'] = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36']
+	
 	elif "Firefox" in str(headers['User-Agent']):
 		if "Windows" in str(headers['User-Agent']):
 			#Windows 7 and Firefox 40
@@ -103,9 +104,11 @@ def useragent_spoof(headers):
 		else:
 			#OS X 10.10 and Firefox 40.0
 			headers['User-Agent'] = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:40.0) Gecko/20100101 Firefox/40.0']
+	
 	elif "Trident" in str(headers['User-Agent']):
 		#MSIE 11 and Windows 7
-		headers['User-Agent'] = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko"
+		headers['User-Agent'] = ['Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko']
+	
 	else:
 		#OS X 10.10.5 and Safari 8.0
 		headers['User-Agent'] = ['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9']
