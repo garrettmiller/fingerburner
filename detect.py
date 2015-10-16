@@ -39,7 +39,7 @@ def request(context, flow):
 		useragent_spoof(flow.request.headers)
 		
 		#Do plugin detection detection, spoofing if necessary
-		browserplugin_detect()
+		browserplugin_detect(flow.request)
 		
 		#Do font detection, spoofing if necessary
 		font_detect(flow.request)
@@ -125,8 +125,44 @@ def useragent_spoof(headers):
 
 #Function to do browser plugin list detection as part of a JS response.
 def browserplugin_detect(content):
-	pass
+	pluginList = ['Shockwave Flash', 'Silverlight Plug-In', 'Chrome PDF Viewer', 
+	'Native Client', 'Widevine Content Decryption Module', 'FutureSplash Player']
+	
+	#Initialize num_match for iterating through plugin list
+	num_match = 0
+	
+	#Iterate through font list to see if our font was found therein.
+	for p in pluginList:
+		if p in str(content.content):
+			num_match += 1
+			
+	#If we see a lot of words matching fonts in response, 
+	#font fingerprinting is likely happening.
+	#If we have less than 3, we're probably not unique enough to fingerprint.
+	#Write to logfile for fingerprinting.
+	if num_match >= 3:
+		print "Plugin fingerprinting detected"
+		f2 = open ("plugin_log.txt", "a")
+		f2.write("----------%s----------\n" % str(datetime.now()))
+		f2.write("URL: %s\n" % content.pretty_url(True))
+		f2.write("CONTENT: %s\n" % content.content)
+		f2.write("FONTS FOUND: %d\n" % (num_match))
+		f2.close()
+		#Do plugin spoofing, if plugin detection detected.
+		browserplugin_spoof(content.content)
 	
 #Function to do browser plugin list spoofing if necessary.
 def browserplugin_spoof(content):
-	pass
+
+	#Default Chrome 46 on Windows:
+	#Plugin 0: Chrome PDF Viewer; ; mhjfbmdgcfjbbpaeojofohoefgiehjai; (; application/pdf; ). Plugin 1: Chrome PDF Viewer; Portable Document Format; internal-pdf-viewer; (Portable Document Format; application/x-google-chrome-pdf; pdf). Plugin 2: Native Client; ; internal-nacl-plugin; (Native Client Executable; application/x-nacl; ) (Portable Native Client Executable; application/x-pnacl; ). Plugin 3: Shockwave Flash; Shockwave Flash 19.0 r0; pepflashplayer.dll; (Shockwave Flash; application/x-shockwave-flash; swf) (FutureSplash Player; application/futuresplash; spl). Plugin 4: Widevine Content Decryption Module; Enables Widevine licenses for playback of HTML audio/video content. (version: 1.4.8.824); widevinecdmadapter.dll; (Widevine Content Decryption Module; application/x-ppapi-widevine-cdm; ).
+	
+	#Linux Firefox with Flash:
+	#Plugin 0: Shockwave Flash; Shockwave Flash 11.2 r202; libflashplayer.so; (Shockwave Flash; application/x-shockwave-flash; swf) (FutureSplash Player; application/futuresplash; spl). 
+	
+	#Default IE8
+	#WindowsMediaplayer 12,0,7601,17514; 
+	
+	#IE11 with Flash on Windows 10
+	#Plugin 0: Shockwave Flash; Shockwave Flash 19.0 r0; Flash.ocx; (Shockwave Flash; application/x-shockwave-flash; swf) (Shockwave Flash; application/futuresplash; spl). Plugin 1: Silverlight Plug-In; 5.1.40728.0; npctrl.dll; (Silverlight Plug-In; application/x-silverlight-2; ) (Silverlight Plug-In; application/x-silverlight; ). 
+	return content
