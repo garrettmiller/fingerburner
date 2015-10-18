@@ -136,8 +136,6 @@ def font_spoof(content):
 		m = re.search(r, content)
 		if m:
 			locations[name] = (m.start(0), m.end(0))
-			if name == "Vivaldi":
-				print "Suppose to be Vivaldi", content[m.start(0):m.end(0)]
 		pass
 	
 	list_pos = [(k, v) for k, v in locations.items()]
@@ -161,9 +159,7 @@ def font_spoof(content):
 	index = content.find(name)
 	
 	if index == -1:
-		print "Something terrible has happen. Can't find existing font:", name
-		#print "list_pos: ", list_pos
-		print "content: %s" % content 
+		print "Something terrible has happen. Can't find existing font:", name 
 		sys.exit(-1)
 		pass
 	
