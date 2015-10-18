@@ -10,16 +10,14 @@ from datetime import datetime #Necessary for logging time
 from collections import Counter
 from libmproxy.script import concurrent #Enable concurrency to increase speed
 from libmproxy.protocol.http import decoded #Enable decoding gzipped responses
-import re
-import sys
-
+import re #Needed to perform regex functions
+import sys #Needed to exit with error status
 try:
 	import cPickle as pickle #Necessary to read our fontlist in from file
 except:
 	import pickle #cPickle is faster, but fall back to pickle if it's not there.
 
-
-
+#Function to get fonts from pickle storage object.
 def get_font_list ():
 	fontList = pickle.load(open("fontlist.pickle", "rb"))
 	good_font_test = re.compile("^[a-zA-Z0-9_ ]+$")
@@ -53,13 +51,6 @@ def request(context, flow):
 		#Only run for POST or GET data responses, return otherwise
 		if(flow.request.method != "POST" and flow.request.method != "GET"):
 			return
-			
-		#Write logfile for browsing, likely will remove this for final deliverable.
-		f1 = open("log.txt", "a")
-		f1.write("%s\n" % (flow.request.pretty_url(True)))
-		f1.write("%s\n" % (flow.request.content))
-		f1.write("%s\n" % (flow.request.method))
-		f1.close()
 
 		#Always make useragent more common, to reduce fingerprintability.
 		useragent_spoof(flow.request.headers)
@@ -127,7 +118,7 @@ def font_spoof(content):
 	index = content.find(name)
 	
 	if index == -1:
-		print "Something terrible has happen. Can't find existing font:", name 
+		print "Something terrible has happened. Can't find existing font, exiting:", name 
 		sys.exit(-1)
 		pass
 	
@@ -138,8 +129,7 @@ def font_spoof(content):
 	# Detecting whether another character is used for space
 	replaced_space = " "
 	for name, r in zip(fontList, fontRe):
-		# We need to find a space character to test if another character is
-		# used
+		# We need to find a space character to test if another character is used
 		if name.find(" ") == -1:
 			continue
 		
@@ -209,8 +199,8 @@ def browserplugin_detect(content):
 		if p in str(content.content):
 			num_match += 1
 			
-	#If we see a lot of words matching fonts in response, 
-	#font fingerprinting is likely happening.
+	#If we see a lot of words matching plugins in response, 
+	#plugin fingerprinting is likely happening.
 	#If we have less than 3, we're probably not unique enough to fingerprint.
 	#Write to logfile for fingerprinting.
 	if num_match >= 3:
@@ -224,8 +214,8 @@ def browserplugin_detect(content):
 		#Do plugin spoofing, if plugin detection detected.
 		content.content = browserplugin_spoof(content.content)
 	
-# This function defeat only browserspy library's plugin detection because it
-# detects only the iterator pattern of browserspy, which is "Plugin <number>:"
+# This function defeats only BrowserSpy library's plugin detection because it
+# detects only the iterator pattern of BrowserSpy, which is "Plugin <number>:"
 # for plugin.
 # Due to the heterogeneous nature of plugin names (there is a mixture of
 # alphabetical character, numbers, underscore, hypens, period, semi-colon, 
