@@ -47,6 +47,12 @@ Configure your browser to use HTTP proxy "localhost" on port 8080.
 Navigate to http://mitm.it, and install the SSL certificate by following 
 the on-screen instructions for your operating system to enable SSL protection.
 
+Windows SSL Certificate Installation:
+1. Download certificate http://mitm.it
+2. Navigate to Control Panel > Internet Options > Content Tab > Certificates
+3. Select Trusted Root Certificates
+4. Select Import, view by all files, and Select Downloaded Certificate, for example: "mitmproxy-ca-cert.p12"
+
 For more info see https://mitmproxy.org/doc/certinstall.html
 
 =========================================================
