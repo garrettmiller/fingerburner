@@ -10,13 +10,31 @@ from datetime import datetime #Necessary for logging time
 from collections import Counter
 from libmproxy.script import concurrent #Enable concurrency to increase speed
 from libmproxy.protocol.http import decoded #Enable decoding gzipped responses
+import re
+import sys
+
 try:
 	import cPickle as pickle #Necessary to read our fontlist in from file
 except:
 	import pickle #cPickle is faster, but fall back to pickle if it's not there.
 
+def get_font_list ():
+	fontList = pickle.load(open("fontlist.pickle", "rb"))
+	good_font_test = re.compile("^[a-zA-Z0-9_ ]+$")
+	temp_fonts = [f for f in fontList if good_font_test.match(f)]
+	
+	return temp_fonts
+	
+# Return a regular expression search pattern for every font in fontList
+def build_font_regex (fontList):
+	fontRe = [f.replace(" ", "[+ ]{1}") for f in fontList]
+	reObjs = [re.compile(r) for r in fontRe]
+	
+	return reObjs
+
 #Load fontList
-fontList = pickle.load(open("fontlist.pickle", "rb"))
+fontList = get_font_list()
+fontRe = build_font_regex(fontList)
 
 #Handle packet requests for mitmproxy. Runs concurrently for speed, 
 #remove @concurrent if this is causing problems.
@@ -71,6 +89,44 @@ def font_detect(content):
 
 #Function to do font list spoofing as part of a Flash or Java plugin response
 def font_spoof(content):
+	locations = {}
+	
+	for name, r in zip(fontList, fontRe):
+		m = re.search(r, content)
+		if m:
+			locations[name] = (m.start(0), m.end(0))
+		pass
+	
+	list_pos = [(k, v) for k, v in locations.items()]
+	list_pos = sorted(list_pos, key=lambda item: item[1])
+	
+	# The most common distance between end of one font and start of another
+	# should be the length of the delimiter
+	dcount = Counter()
+	dist2name  = {}
+	
+	for i in range(len(list_pos) - 1):
+		name, pos = list_pos[i]
+		nextname, nextpos = list_pos[i+1]
+		d = nextpos[0] - pos[1]
+		dcount[d] += 1
+		dist2name[d] = name
+		pass
+	
+	delimiter_len = dcount.most_common(1)[0][0]
+	name = dist2name[delimiter_len]
+	index = content.find(name)
+	
+	if index == -1:
+		print "Something terrible has happen. Can't find existing font:", name
+		sys.exit(-1)
+		pass
+	
+	start = index + len(name)
+	end = start + delimiter_len
+	delimiter = content[start:end]
+	
+	print delimiter
 	#Initialize empty list of possible delimiters
 	delimiter_list = []
 	
@@ -82,12 +138,12 @@ def font_spoof(content):
 			#last_index = content.rfind(x.search(content).group(0))
 			#delimiter_list.append(content[last_index + len(x.search(content).group(0))])
 		
-	delimiter_list = Counter(delimiter_list)
-
-	#Get the most common character (the delimiter)
-	for key in delimiter_list.most_common(1):
-		print "delimiter is %s\n" % (str(key[0]))
-		delimiter = str(key[0])
+# 	delimiter_list = Counter(delimiter_list)
+# 
+# 	#Get the most common character (the delimiter)
+# 	for key in delimiter_list.most_common(1):
+# 		print "delimiter is %s\n" % (str(key[0]))
+# 		delimiter = str(key[0])
 
 	#Do something with delimiter
 
