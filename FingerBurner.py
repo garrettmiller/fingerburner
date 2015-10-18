@@ -209,7 +209,7 @@ def browserplugin_detect(content):
 		f3.write("----------%s----------\n" % str(datetime.now()))
 		f3.write("URL: %s\n" % content.pretty_url(True))
 		f3.write("CONTENT: %s\n" % content.content)
-		f3.write("FONTS FOUND: %d\n" % (num_match))
+		f3.write("PLUGINS FOUND: %d\n" % (num_match))
 		f3.close()
 		#Do plugin spoofing, if plugin detection detected.
 		content.content = browserplugin_spoof(content.content)
