@@ -36,6 +36,9 @@ def build_font_regex (fontList):
 fontList = get_font_list()
 fontRe = build_font_regex(fontList)
 
+#List of fonts to replace
+default_fonts = ["Arial", "Garamond", "Helvetica", "Times New Roman"]
+
 #Handle packet requests for mitmproxy. Runs concurrently for speed, 
 #remove @concurrent if this is causing problems.
 @concurrent
@@ -84,7 +87,7 @@ def font_detect(content):
 		f2.write("FONTS FOUND: %d\n" % (num_match))
 		f2.close()
 		#Do font spoofing, if font detection detected.
-		font_spoof(content.content)
+		content.content = font_spoof(content.content)
 	return content
 
 #Function to do font list spoofing as part of a Flash or Java plugin response
@@ -126,29 +129,35 @@ def font_spoof(content):
 	end = start + delimiter_len
 	delimiter = content[start:end]
 	
-	print delimiter
-	#Initialize empty list of possible delimiters
-	delimiter_list = []
-	
-	#Alejandro - let's talk about this, we can rework based on new method of list iterating. - Garrett
-	#Build a list of characters found after a font to find delimiter
-	#for f in fontList:
-		#if f in str(content):
-
-			#last_index = content.rfind(x.search(content).group(0))
-			#delimiter_list.append(content[last_index + len(x.search(content).group(0))])
+	# Detecting whether another character is used for space
+	replaced_space = " "
+	for name, r in zip(fontList, fontRe):
+		# We need to find a space character to test if another character is
+		# used
+		if name.find(" ") == -1:
+			continue
 		
-# 	delimiter_list = Counter(delimiter_list)
-# 
-# 	#Get the most common character (the delimiter)
-# 	for key in delimiter_list.most_common(1):
-# 		print "delimiter is %s\n" % (str(key[0]))
-# 		delimiter = str(key[0])
+		m = re.search(r, content)
+		if m:
+			font_in_content = m.group(0)
+			space_index = name.find(" ")
+			replaced_space = font_in_content[space_index]
+			break
+		pass
 
-	#Do something with delimiter
-
-	#random.seed()
-	#random.randint(0, len(fontList))
+	# Replace this chunk of detect fonts to our default_fonts
+	start = list_pos[0][1][0]
+	end = list_pos[-1][1][1]
+	
+	# First, replace the space in our fonts with replaced_space
+	for i in range(len(default_fonts)):
+		f = default_fonts[i]
+		default_fonts[i] = f.replace(" ", replaced_space)
+		pass
+	
+	content = "%s%s%s" % (content[:start], delimiter.join(default_fonts),
+						content[end:])
+	return content
 
 #Function to do useragent spoofing
 #Sourced from https://techblog.willshouse.com/2012/01/03/most-common-user-agents/ on 10/16/2015.
