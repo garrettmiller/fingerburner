@@ -77,6 +77,9 @@ default_fonts = ['Agency FB', 'Algerian', 'Arial', 'Arial Black', 'Arial Narrow'
 'Yu Gothic', 'Yu Gothic Light', 'Yu Gothic Medium', 'Yu Gothic UI', 'Yu Gothic UI Light', 'Yu Gothic UI Semibold', 'Yu Gothic UI Semilight', 
 'Yu Mincho', 'Yu Mincho Demibold', 'Yu Mincho Light']
 
+#Regular expression pattern for plugin iterator string
+pluginRe = re.compile("Plugin[+ ]{1}[0-9]+")
+
 #Handle packet requests for mitmproxy. Runs concurrently for speed, 
 #remove @concurrent if this is causing problems.
 @concurrent
@@ -254,20 +257,36 @@ def browserplugin_detect(content):
 		f3.write("FONTS FOUND: %d\n" % (num_match))
 		f3.close()
 		#Do plugin spoofing, if plugin detection detected.
-		browserplugin_spoof(content.content)
+		content.content = browserplugin_spoof(content.content)
 	
-#Function to do browser plugin list spoofing if necessary.
+# This function defeat only browserspy library's plugin detection because it
+# detects only the iterator pattern of browserspy, which is "Plugin <number>:"
+# for plugin.
+# Due to the heterogeneous nature of plugin names (there is a mixture of
+# alphabetical character, numbers, underscore, hypens, period, semi-colon, 
+# commas, backslash, colon, and many other characters), detecting an iterator
+# pattern for plugin is difficult, so we opted to defeat only browserspy's for
+# now. This is still valuable because browserspy is a popular library.
 def browserplugin_spoof(content):
-
-	#Default Chrome 46 on Windows:
-	#Plugin 0: Chrome PDF Viewer; ; mhjfbmdgcfjbbpaeojofohoefgiehjai; (; application/pdf; ). Plugin 1: Chrome PDF Viewer; Portable Document Format; internal-pdf-viewer; (Portable Document Format; application/x-google-chrome-pdf; pdf). Plugin 2: Native Client; ; internal-nacl-plugin; (Native Client Executable; application/x-nacl; ) (Portable Native Client Executable; application/x-pnacl; ). Plugin 3: Shockwave Flash; Shockwave Flash 19.0 r0; pepflashplayer.dll; (Shockwave Flash; application/x-shockwave-flash; swf) (FutureSplash Player; application/futuresplash; spl). Plugin 4: Widevine Content Decryption Module; Enables Widevine licenses for playback of HTML audio/video content. (version: 1.4.8.824); widevinecdmadapter.dll; (Widevine Content Decryption Module; application/x-ppapi-widevine-cdm; ).
+	matches = re.findall(pluginRe, content)
 	
-	#Linux Firefox with Flash:
-	#Plugin 0: Shockwave Flash; Shockwave Flash 11.2 r202; libflashplayer.so; (Shockwave Flash; application/x-shockwave-flash; swf) (FutureSplash Player; application/futuresplash; spl). 
+	if matches and len(matches) > 1:
+		m_first = matches[0]
+		m_last = matches[-1]
+		
+		index_first = content.find(m_first)
+		index_last = content.find(m_last)
+		
+		# Grab the plugin number and change it to 0 since there is only
+		# one plugin left, this should be fine
+		colon_index = content[index_last:].find(":")
+		if colon_index == -1:
+			colon_index = content[index_last:].find("%")
+			pass
+		
+		colon_index += index_last
+		content = "%sPlugin 0%s" % (content[:index_first], 
+								content[colon_index:])
+		pass
 	
-	#Default IE8
-	#WindowsMediaplayer 12,0,7601,17514; 
-	
-	#IE11 with Flash on Windows 10
-	#Plugin 0: Shockwave Flash; Shockwave Flash 19.0 r0; Flash.ocx; (Shockwave Flash; application/x-shockwave-flash; swf) (Shockwave Flash; application/futuresplash; spl). Plugin 1: Silverlight Plug-In; 5.1.40728.0; npctrl.dll; (Silverlight Plug-In; application/x-silverlight-2; ) (Silverlight Plug-In; application/x-silverlight; ). 
 	return content
