@@ -19,7 +19,9 @@ except:
 
 #Function to get fonts from pickle storage object.
 def get_font_list ():
-	fontList = pickle.load(open("fontlist.pickle", "rb"))
+	f = open("fontlist.pickle", "rb")
+	fontList = pickle.load(f)
+	f.close()
 	good_font_test = re.compile("^[a-zA-Z0-9_ ]+$")
 	temp_fonts = [f for f in fontList if good_font_test.match(f)]
 	
