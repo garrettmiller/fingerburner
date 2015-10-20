@@ -41,8 +41,6 @@ fontRe = build_font_regex(fontList)
 #List of fonts to replace
 default_fonts = pickle.load(open("common_fonts.pickle", "rb"))
 
-print default_fonts
-
 #Regular expression pattern for plugin iterator string
 pluginRe = re.compile("Plugin[+ ]{1}[0-9]+")
 
